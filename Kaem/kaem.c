@@ -845,6 +845,9 @@ int main(int argc, char** argv, char** envp)
 				filename = argv[i + 1];
 			}
 			i = i + 2;
+
+			// don't process more to stay consitent with bash
+			break;
 		}
 		else if(match(argv[i], "-i") || match(argv[i], "--init-mode"))
 		{ /* init mode does not populate env */

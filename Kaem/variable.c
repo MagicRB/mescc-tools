@@ -197,14 +197,19 @@ void variable_all(char** argv, struct Token* n)
 	char* hold = argv[i];
 	n->value = argv_element;
 	/* Assuming the form kaem -f script or kaem -f script -- 123 we want matching results to bash, so skip the kaem, -f and script */
-	while(!match("--", hold))
+	while(!match("--", hold) && !match("-f", hold) && !match("--file", hold))
 	{
 		i = i + 1;
 		hold = argv[i];
 		if(argv_length == i) break;
 	}
 
-	/* put i = i + 1 in the for initialization to skip past the -- */
+	if (match("-f", hold) || match("--file", hold)) {
+		i = i + 2;
+		hold = argv[i];
+        }
+
+        /* put i = i + 1 in the for initialization to skip past the -- */
 	for(; i < argv_length; i = i + 1)
 	{
 		/* Ends up with (n->value) (argv[i]) */
