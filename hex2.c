@@ -51,19 +51,14 @@ int main(int argc, char **argv)
 		{
 			option_index = option_index + 1;
 		}
-		else if(match(argv[option_index], "--BigEndian") || match(argv[option_index], "--big-endian"))
+		else if(match(argv[option_index], "--big-endian"))
 		{
 			BigEndian = TRUE;
 			option_index = option_index + 1;
 		}
-		else if(match(argv[option_index], "--LittleEndian") || match(argv[option_index], "--little-endian"))
+		else if(match(argv[option_index], "--little-endian"))
 		{
 			BigEndian = FALSE;
-			option_index = option_index + 1;
-		}
-		else if(match(argv[option_index], "--exec_enable"))
-		{
-			/* Effectively a NOP */
 			option_index = option_index + 1;
 		}
 		else if(match(argv[option_index], "--non-executable"))
@@ -95,7 +90,7 @@ int main(int argc, char **argv)
 			ByteMode = BINARY;
 			option_index = option_index + 1;
 		}
-		else if(match(argv[option_index], "-B") || match(argv[option_index], "--BaseAddress") || match(argv[option_index], "--base-address"))
+		else if(match(argv[option_index], "-B") || match(argv[option_index], "--base-address"))
 		{
 			Base_Address = strtoint(argv[option_index + 1]);
 			option_index = option_index + 2;
@@ -139,7 +134,7 @@ int main(int argc, char **argv)
 		}
 		else if(match(argv[option_index], "-V") || match(argv[option_index], "--version"))
 		{
-			fputs("hex2 1.1.0\n", stdout);
+			fputs("hex2 1.4.0\n", stdout);
 			exit(EXIT_SUCCESS);
 		}
 		else

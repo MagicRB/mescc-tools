@@ -23,8 +23,9 @@ all: M1 hex2 get_machine blood-elf kaem catm
 CC=gcc
 CFLAGS:=$(CFLAGS) -D_GNU_SOURCE -std=c99 -ggdb -fno-common
 
-M1: M1-macro.c M2libc/bootstrappable.c | bin
+M1: M1-macro.c stringify.c M2libc/bootstrappable.c | bin
 	$(CC) $(CFLAGS) M1-macro.c \
+	stringify.c \
 	M2libc/bootstrappable.c \
 	-o bin/M1
 
@@ -40,13 +41,14 @@ get_machine: get_machine.c M2libc/bootstrappable.c | bin
 	M2libc/bootstrappable.c \
 	-o bin/get_machine
 
-blood-elf: blood-elf.c M2libc/bootstrappable.c | bin
+blood-elf: blood-elf.c stringify.c M2libc/bootstrappable.c | bin
 	$(CC) $(CFLAGS) blood-elf.c \
+	stringify.c \
 	M2libc/bootstrappable.c \
 	-o bin/blood-elf
 
 kaem: Kaem/kaem.c Kaem/variable.c Kaem/kaem_globals.c M2libc/bootstrappable.c | bin
-	cd Kaem && make kaem
+	$(MAKE) -C Kaem kaem
 
 catm: catm.c | bin
 	$(CC) $(CFLAGS) catm.c -o bin/catm
@@ -66,7 +68,7 @@ clean:
 	./test/test9/cleanup.sh
 	./test/test10/cleanup.sh
 	./test/test11/cleanup.sh
-	cd Kaem && make clean
+	$(MAKE) -C Kaem clean
 
 # A cleanup option we probably don't need
 .PHONY: clean-hard
@@ -98,46 +100,46 @@ test: test0-binary \
 	test13-binary | results
 	./test.sh
 
-test0-binary: results hex2 get_machine
+test0-binary: results hex2 get_machine | results
 	test/test0/hello.sh
 
-test1-binary: results hex2 M1 get_machine
+test1-binary: results hex2 M1 get_machine | results
 	test/test1/hello.sh
 
-test2-binary: results hex2 M1 get_machine
+test2-binary: results hex2 M1 get_machine | results
 	test/test2/hello.sh
 
-test3-binary: results hex2 M1 get_machine
+test3-binary: results hex2 M1 get_machine | results
 	test/test3/hello.sh
 
-test4-binary: results hex2 M1 get_machine
+test4-binary: results hex2 M1 get_machine | results
 	test/test4/hello.sh
 
-test5-binary: results hex2 M1 get_machine
+test5-binary: results hex2 M1 get_machine | results
 	test/test5/hello.sh
 
-test6-binary: results hex2 M1 get_machine
+test6-binary: results hex2 M1 get_machine | results
 	test/test6/hello.sh
 
-test7-binary: results hex2 M1 get_machine
+test7-binary: results hex2 M1 get_machine | results
 	test/test7/hello.sh
 
-test8-binary: results hex2 M1 get_machine
+test8-binary: results hex2 M1 get_machine | results
 	test/test8/hello.sh
 
-test9-binary: results hex2 M1 blood-elf get_machine
+test9-binary: results hex2 M1 blood-elf get_machine | results
 	test/test9/hello.sh
 
-test10-binary: results hex2 M1 get_machine
+test10-binary: results hex2 M1 get_machine | results
 	test/test10/hello.sh
 
-test11-binary: results hex2 M1 blood-elf get_machine
+test11-binary: results hex2 M1 blood-elf get_machine | results
 	test/test11/hello.sh
 
-test12-binary: results hex2 M1 blood-elf get_machine
+test12-binary: results hex2 M1 blood-elf get_machine | results
 	test/test12/hello.sh
 
-test13-binary: results hex2 M1 blood-elf get_machine
+test13-binary: results hex2 M1 blood-elf get_machine | results
 	test/test13/hello.sh
 
 # Generate test answers

@@ -52,8 +52,16 @@ int main(int argc, char **argv)
 		else if(match(argv[option_index], "--override"))
 		{
 			override = TRUE;
-			override_string = argv[option_index + 1];
-			option_index = option_index + 2;
+			if((option_index + 1) < argc)
+			{
+				override_string = argv[option_index + 1];
+				option_index = option_index + 2;
+			}
+			else
+			{
+				fputs("--override requires an actual override string\n", stderr);
+				exit(EXIT_FAILURE);
+			}
 		}
 		else if(match(argv[option_index], "--os") || match(argv[option_index], "--OS"))
 		{
@@ -73,15 +81,50 @@ int main(int argc, char **argv)
 			fputc('\n', stdout);
 			exit(EXIT_SUCCESS);
 		}
+		else if(match(argv[option_index], "--endian"))
+		{
+			if(override) fputs(override_string, stdout);
+			else if(match("aarch64", unameData->machine)
+			     || match("amd64", unameData->machine)
+			     || match("ppc64le", unameData->machine)
+			     || match("riscv64", unameData->machine)
+			     || match("x86_64", unameData->machine)
+			     || match("i386", unameData->machine)
+			     || match("i486", unameData->machine)
+			     || match("i586", unameData->machine)
+			     || match("i686", unameData->machine)
+			     || match("i686-pae", unameData->machine))fputs("--little-endian", stdout);
+			else fputs("--big-endian", stdout);
+			fputc('\n', stdout);
+			exit(EXIT_SUCCESS);
+		}
+		else if(match(argv[option_index], "--hex2"))
+		{
+			if(override) fputs(override_string, stdout);
+			else if(match("aarch64", unameData->machine)) fputs("0x400000", stdout);
+			else if(match("armv7l", unameData->machine)) fputs("0x10000", stdout);
+			else if(match("amd64", unameData->machine)
+			     || match("x86_64", unameData->machine)) fputs("0x600000", stdout);
+			else if(match("ppc64le", unameData->machine)) fputs("0x10000", stdout);
+			else if(match("riscv64", unameData->machine)) fputs("0x600000", stdout);
+			else if(match("i386", unameData->machine)
+			     || match("i486", unameData->machine)
+			     || match("i586", unameData->machine)
+			     || match("i686", unameData->machine)
+			     || match("i686-pae", unameData->machine)) fputs("0x08048000", stdout);
+			else fputs("0x0", stdout);
+			fputc('\n', stdout);
+			exit(EXIT_SUCCESS);
+		}
 		else if(match(argv[option_index], "-V") || match(argv[option_index], "--version"))
 		{
-			fputs("get_machine 1.1.0\n", stdout);
+			fputs("get_machine 1.4.0\n", stdout);
 			exit(EXIT_SUCCESS);
 		}
 		else if(match(argv[option_index], "-h") || match(argv[option_index], "--help"))
 		{
 			fputs("If you want exact architecture use --exact\n", stderr);
-			fputs("If you want to know the Operating system use --OS\n", stderr);
+			fputs("If you want to know the Operating system use --os\n", stderr);
 			fputs("If you wish to override the output to anything you want use --override\n", stderr);
 			exit(EXIT_SUCCESS);
 		}

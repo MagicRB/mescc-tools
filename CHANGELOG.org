@@ -22,6 +22,50 @@
 ** Fixed
 
 ** Removed
+Hex2 removed support for the flags: --BigEndian, --LittleEndian, --exec_enable and --BaseAddress
+M1 removed support for the flags: --BigEndian and --LittleEndian
+
+* 1.4 - 2022-05-01
+** Added
+Added exec support to kaem
+Added if/else conditionals to kaem
+Add support for aliases in kaem
+Added --hex2 and --endian flags to get_machine
+Kaem now returns more specific messages based on waitpid's status
+Kaem added --show-exit-codes flag to enable seeing exit codes for subprocesses
+
+** Changed
+Kaem now places space between echo tokens
+Kaem now also terminates commands with ;
+Kaem now is strict by default and you need to pass --non-strict to revert to old behavior
+
+** Fixed
+Various typos
+Fix extracting exit status of completed programs in kaem
+Catch get_machine's --override segfault
+
+** Removed
+Remove unused getopt include from blood-elf
+
+* 1.3 - 2021-10-03
+** Added
+Hex2 support for RISC-V
+M1 support for RISC-V
+Blood-elf support for RISC-V
+
+** Changed
+clean up $@ behavior for kaem
+ *MAJOR BREAKING CHANGE* make Blood-elf require --little-endian or --big-endian flag to be used (commit db4a332418e7fe5033b2836c9f355f076df325df)
+
+** Fixed
+Make changing PATH within a kaem script actually change the PATH
+Multiple typos in hex2 and M1
+Correct e_entry behavior for elf example headers
+Make kaem behave correctly when given a NULL envp
+Make kaem behave correctly when given an empty envp
+
+** Removed
+Removed High level prototypes for hex1, hex2 and M0
 
 * 1.2 - 2021-06-09
 ** Added

@@ -18,6 +18,7 @@
 
 extern int command_done;
 extern int VERBOSE;
+extern int VERBOSE_EXIT;
 extern int STRICT;
 extern int INIT_MODE;
 extern int FUZZING;
@@ -28,3 +29,5 @@ extern char* PATH;
 extern struct Token* token;
 /* Env linked-list; stores the environment variables */
 extern struct Token* env;
+/* Alias linked-list; stores the aliases */
+extern struct Token* alias;
