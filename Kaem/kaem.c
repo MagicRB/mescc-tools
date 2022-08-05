@@ -1149,7 +1149,7 @@ int collect_command(FILE* script, char** argv)
 			handle_variables(argv, n);
 
 			/* If the variable expands into nothing */
-			if(match(n->value, " "))
+			if(match(n->value, ""))
 			{
 				n->value = NULL;
 				continue;
